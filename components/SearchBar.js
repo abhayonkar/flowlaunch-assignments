@@ -1,16 +1,28 @@
 // components/SearchBar.js
-import React from 'react'
 
-const SearchBar = ({ searchTerm, setSearchTerm }) => {
+import { useState } from 'react';
+
+const SearchBar = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+    onSearch(e.target.value);
+  };
+
   return (
-    <input
-      type="text"
-      placeholder="Search products..."
-      value={searchTerm}
-      onChange={e => setSearchTerm(e.target.value)}
-      className="w-full p-2 border rounded-lg mb-4 text-gray-700"
-    />
-  )
-}
+    <div className="mb-4">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleChange}
+        placeholder="Search products..."
+        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:text-white"
+      />
 
-export default SearchBar
+      
+    </div>
+  );
+};
+
+export default SearchBar;

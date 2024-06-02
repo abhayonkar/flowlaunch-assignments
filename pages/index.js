@@ -1,41 +1,72 @@
 // pages/index.js
-import { useState, useEffect } from 'react'
-import { fetchProducts } from '../lib/api'
-import ProductGrid from '../components/ProductGrid'
-import SearchBar from '../components/SearchBar'
-import ProductModal from '../components/ProductModal'
+
+import { useState, useEffect } from 'react';
+import Head from 'next/head';
+import ProductCard from '../components/ProductCard';
+import SearchBar from '../components/SearchBar';
+import ProductDetailsModal from '../components/ProductDetailsModal';
 
 export default function Home() {
-  const [products, setProducts] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const products = await fetchProducts()
-      setProducts(products)
-    }
-    getProducts()
-  }, [])
+    fetch('https://fakestoreapi.com/products')
+      .then(response => response.json())
+      .then(data => {
+        setProducts(data);
+        setFilteredProducts(data);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
 
-  const filteredProducts = products.filter(product =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    const filtered = products.filter(product =>
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
 
-  const handleProductClick = (product) => {
-    setSelectedProduct(product)
-  }
+  const openModal = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const closeModal = () => {
+    setSelectedProduct(null);
+  };
 
   return (
-    <div className="p-4">
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <ProductGrid products={filteredProducts} onProductClick={handleProductClick} />
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-800">
+      <Head>
+        <title>Product Listing Page</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      
+      <main className="container mx-auto p-4">
+      <div className="flex items-center justify-between mb-4">
+  <h1 className="text-3xl font-semibold">Product List</h1>
+  <button
+    onClick={() => document.documentElement.classList.toggle('dark')}
+    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+  >
+    Switch Mode
+  </button>
+</div>
+
+        <SearchBar onSearch={handleSearch} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredProducts.map(product => (
+            <ProductCard key={product.id} product={product} onClick={() => openModal(product)} />
+          ))}
+        </div>
+      </main>
+
       {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-        />
+        <ProductDetailsModal product={selectedProduct} onClose={closeModal} />
       )}
     </div>
-  )
+  );
 }
