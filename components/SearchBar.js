@@ -1,5 +1,3 @@
-// components/SearchBar.js
-
 import { useState } from 'react';
 
 const SearchBar = ({ onSearch }) => {
@@ -17,10 +15,8 @@ const SearchBar = ({ onSearch }) => {
         value={searchTerm}
         onChange={handleChange}
         placeholder="Search products..."
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:text-white"
+        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600"
       />
-
-      
     </div>
   );
 };

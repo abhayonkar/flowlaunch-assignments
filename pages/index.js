@@ -1,5 +1,3 @@
-// pages/index.js
-
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import ProductCard from '../components/ProductCard';
@@ -39,23 +37,22 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <Head>
         <title>Product Listing Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-      <main className="container mx-auto p-4">
-      <div className="flex items-center justify-between mb-4">
-  <h1 className="text-3xl font-semibold">Product List</h1>
-  <button
-    onClick={() => document.documentElement.classList.toggle('dark')}
-    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-  >
-    Switch Mode
-  </button>
-</div>
 
+      <main className="container mx-auto p-4">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-3xl font-semibold">Product Listing</h1>
+          <button
+            onClick={() => document.documentElement.classList.toggle('dark')}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+          >
+            Toggle Dark Mode
+          </button>
+        </div>
         <SearchBar onSearch={handleSearch} />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredProducts.map(product => (

@@ -17,11 +17,11 @@ const ProductDetailsModal = ({ product, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 modal-overlay">
-      <div className="bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-md flex">
-        <img className="w-64 h-64 object-cover" src={product.image} alt={product.title} />
+      <div className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md relative flex">
+        <img className="w-64 h-64 object-contain" src={product.image} alt={product.title} />
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-2">{product.title}</h2>
-          <p className="text-gray-600 mb-2">${product.price}</p>
+          <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">{product.title}</h2>
+          <p className="text-gray-600 mb-2 dark:text-gray-400">${product.price}</p>
           <p className="text-gray-800 dark:text-gray-300">{product.description}</p>
         </div>
         <button className="absolute top-0 right-0 m-2 text-gray-600 dark:text-gray-400" onClick={onClose}>
